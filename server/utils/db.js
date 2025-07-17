@@ -2,14 +2,13 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB connected');
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sentiment-dashboard';
+    await mongoose.connect(mongoURI);
+    console.log('MongoDB connected successfully');
   } catch (err) {
     console.error('MongoDB connection error:', err);
-    process.exit(1);
+    console.log('Please make sure MongoDB is running or use MongoDB Atlas');
+    // Don't exit process, let the app continue without DB for now
   }
 };
 
